@@ -31,6 +31,40 @@ export default async function Home() {
           </Button>
         </div>
 
+        {/* BUSCA RAPIDA */}
+        <div className="mt-6 flex gap-3 overflow-x-scroll">
+          <Button className="gap-2" variant="secondary">
+            <Image src="/cabelo.svg" width={16} height={16} alt="Cabelo" />
+            Cabelo
+          </Button>
+          <Button className="gap-2" variant="secondary">
+            <Image src="/barba.svg" width={16} height={16} alt="Barba" />
+            Barba
+          </Button>
+          <Button className="gap-2" variant="secondary">
+            <Image
+              src="/acabamento.svg"
+              width={16}
+              height={16}
+              alt="Acabamento"
+            />
+            Acabamento
+          </Button>
+          <Button className="gap-2" variant="secondary">
+            <Image src="/barba.svg" width={16} height={16} alt="Pézinho" />
+            Pézinho
+          </Button>
+          <Button className="gap-2" variant="secondary">
+            <Image
+              src="/acabamento.svg"
+              width={16}
+              height={16}
+              alt="Sobrancelha"
+            />
+            Sobrancelha
+          </Button>
+        </div>
+
         {/* BANNER */}
         <div className="relative mt-6 h-[150px] w-full">
           <Image
