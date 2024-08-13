@@ -14,11 +14,11 @@ import {
 import { Calendar } from "./ui/calendar"
 import { ptBR } from "date-fns/locale"
 import { CALENDAR_STYLE } from "./styles/calendar"
-import { useEffect, useState } from "react"
 import { TIME_LIST } from "../_constants/time_list"
 import { useSession } from "next-auth/react"
 import { toast } from "sonner"
-import { format, set } from "date-fns"
+import { useEffect, useMemo, useState } from "react"
+import { format, isPast, isToday, set } from "date-fns"
 import { createBooking } from "../_actions/create-booking"
 import { getBookings } from "../_actions/get-bookings"
 import { Dialog, DialogContent } from "./ui/dialog"
@@ -29,10 +29,20 @@ interface ServiceItemProps {
   barbershop: Pick<Barbershop, "name">
 }
 
-const getTimeList = (bookings: Booking[]) => {
+interface GetTimeListProps {
+  bookings: Booking[]
+  selectedDay: Date
+}
+
+const getTimeList = ({ bookings, selectedDay }: GetTimeListProps) => {
   return TIME_LIST.filter((time) => {
     const hour = Number(time.split(":")[0])
     const minutes = Number(time.split(":")[1])
+
+    const timeIsOnThePast = isPast(set(new Date(), { hours: hour, minutes }))
+    if (timeIsOnThePast && isToday(selectedDay)) {
+      return false
+    }
 
     const hasBookingOnCurrentTime = bookings.some(
       (booking) =>
@@ -82,6 +92,14 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
     setBookingSheetIsOpen(false)
   }
 
+  const timeList = useMemo(() => {
+    if (!selectedDay) return []
+    return getTimeList({
+      bookings: dayBookings,
+      selectedDay,
+    })
+  }, [dayBookings, selectedDay])
+
   const handleCreateBooking = async () => {
     try {
       if (!selectedDay || !selectedTime) return
@@ -124,12 +142,10 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
               className="rounded-lg object-cover"
             />
           </div>
-
           {/* DIREITA */}
           <div className="space-y-2">
             <h3 className="text-sm font-semibold">{service.name}</h3>
             <p className="text-sm text-gray-400">{service.description}</p>
-
             {/* PREÇO E BOTÃO */}
             <div className="flex items-center justify-between">
               <p className="text-sm font-bold text-primary">
@@ -166,18 +182,24 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
 
                   {selectedDay && (
                     <div className="flex gap-3 overflow-x-auto border-b border-solid p-5 [&::-webkit-scrollbar]:hidden">
-                      {getTimeList(dayBookings).map((time) => (
-                        <Button
-                          key={time}
-                          variant={
-                            selectedTime === time ? "default" : "outline"
-                          }
-                          className="rounded-full"
-                          onClick={() => handleTimeSelect(time)}
-                        >
-                          {time}
-                        </Button>
-                      ))}
+                      {timeList.length > 0 ? (
+                        timeList.map((time) => (
+                          <Button
+                            key={time}
+                            variant={
+                              selectedTime === time ? "default" : "outline"
+                            }
+                            className="rounded-full"
+                            onClick={() => handleTimeSelect(time)}
+                          >
+                            {time}
+                          </Button>
+                        ))
+                      ) : (
+                        <p className="text-xs">
+                          Não há horários disponíveis para este dia.
+                        </p>
+                      )}
                     </div>
                   )}
 
@@ -194,7 +216,6 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                               }).format(Number(service.price))}
                             </p>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <h2 className="text-sm text-gray-400">Data</h2>
                             <p className="text-sm">
@@ -203,12 +224,10 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                               })}
                             </p>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <h2 className="text-sm text-gray-400">Horário</h2>
                             <p className="text-sm">{selectedTime}</p>
                           </div>
-
                           <div className="flex items-center justify-between">
                             <h2 className="text-sm text-gray-400">Barbearia</h2>
                             <p className="text-sm">{barbershop.name}</p>
