@@ -174,6 +174,7 @@ const ServiceItem = ({ service, barbershop }: ServiceItemProps) => {
                     <Calendar
                       mode="single"
                       locale={ptBR}
+                      fromDate={new Date()}
                       selected={selectedDay}
                       onSelect={handleDateSelect}
                       styles={CALENDAR_STYLE}
