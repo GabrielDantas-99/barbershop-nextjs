@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# PotiBarber
+PotiBarber é um sistema de gerenciamento de barbearias, onde os usuários podem acessar barbearias fictícias cadastradas através de URLs exclusivas. Este projeto foi desenvolvido utilizando o framework Next.js, com autenticação integrada via NextAuth, incluindo suporte ao Google Provider. A interface de usuário é estilizada e construída com a biblioteca de componentes ShadcnUI.
 
-## Getting Started
+## Tecnologias Utilizadas
+  - Next.js: Framework React moderno para desenvolvimento de aplicações web.
+  - NextAuth: Biblioteca de autenticação para Next.js, com suporte a vários providers (Google, GitHub, etc.).
+  - ShadcnUI: Conjunto de componentes de interface altamente personalizáveis.
 
-First, run the development server:
+## Funcionalidades
+Gerenciamento de Barbearias: Cada barbearia fictícia tem uma URL dedicada no sistema para acesso fácil.
+Autenticação com Google: Os usuários podem se autenticar no sistema utilizando suas contas do Google.
+Reserva de serviço: O usuário pode escolher o serviço desejado, o dia e o horário disponível.
+Interface Intuitiva: Interface de usuário moderna e responsiva utilizando ShadcnUI.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Como Executar o Projeto
+
+### Pré-requisitos
+Certifique-se de ter o Node.js e o npm instalados em sua máquina.
+
+#### 1- Clone este repositório:
+```
+bash
+git clone https://github.com/usuario/potibarber.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 2- Instale as dependências do projeto:
+```
+bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+#### 3- Crie um arquivo .env.local na raiz do projeto com as variáveis de ambiente necessárias. Aqui está um exemplo:
+```
+.env
+NEXTAUTH_URL=http://localhost:3000
+GOOGLE_CLIENT_ID=seu_google_client_id
+GOOGLE_CLIENT_SECRET=seu_google_client_secret
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### 4- Execute o projeto localmente:
+```
+bash
+npm run dev
+```
 
-## Learn More
+#### 5- Acesse o sistema no navegador:
+http://localhost:3000/barbershop/63150eeb-9139-4ad9-906b-f47391dee3d7
 
-To learn more about Next.js, take a look at the following resources:
+### Gerenciamento de Barbearias
+#### Os usuários podem acessar as barbearias fictícias utilizando URLs exclusivas no formato:
+http://localhost:3000/barbershop/<id-da-barbearia>
+#### Exemplo:
+http://localhost:3000/barbershop/63150eeb-9139-4ad9-906b-f47391dee3d7
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Autenticação
+A autenticação é feita utilizando o NextAuth, e o sistema oferece a opção de login via Google.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Comandos Úteis
+`npm run build`: Faz o build da aplicação para produção.
+`npm run start`: Inicia o servidor em modo de produção.
+`npm run dev`: Inicia o servidor em modo de desenvolvimento.
 
-## Deploy on Vercel
+## Contribuição
+Faça um fork deste repositório.
+Crie uma branch para suas alterações (git checkout -b minha-feature).
+Faça commit das suas mudanças (git commit -am 'Adiciona nova funcionalidade').
+Envie para a branch (git push origin minha-feature).
+Abra um Pull Request.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Licença
+Este projeto está licenciado sob a licença MIT.
