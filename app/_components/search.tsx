@@ -42,7 +42,7 @@ const Search = () => {
                 <Input
                   placeholder="Faça sua busca..."
                   {...field}
-                  className="w-full"
+                  className="w-full bg-white"
                 />
               </FormControl>
               <FormMessage />
